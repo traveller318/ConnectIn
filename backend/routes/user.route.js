@@ -1,7 +1,22 @@
 import express from "express";
-import { registerUser } from "../controllers/user.controller.js";
+import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo } from "../controllers/user.controller.js";
+import isAuthenticated  from "../utils/isAuth.js";
+import { addOrUpdateJob,getAllJobs } from "../controllers/jobs.controller.js";
+
 const router = express.Router();
 
-router.post("/register",registerUser);
+// User authentication routes
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.get("/logout", logoutUser);
 
-export default router
+// Job seeker info upload route
+router.post("/upload-job-seeker-info",isAuthenticated, uploadJobSeekerInfo);
+
+router.post("/upload-employer-info",isAuthenticated, uploadEmployerInfo);
+router.post("/add-or-update-job", isAuthenticated,addOrUpdateJob);
+router.get("/jobs", getAllJobs);
+
+
+
+export default router;
