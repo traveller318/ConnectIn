@@ -50,10 +50,7 @@ export const getAllJobs = async (req, res) => {
     try {
         // Fetch all jobs along with employer information
         const [jobs] = await con.query(
-            `SELECT * 
-             FROM jobs 
-             JOIN user ON jobs.employer_id = user.user_id 
-             WHERE user.user_type = 'Employer'`
+            `SELECT * FROM jobs JOIN employer_info ON jobs.employer_id = employer_info.user_id;`
         );
 
         // Check if there are any jobs

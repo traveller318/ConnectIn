@@ -118,7 +118,7 @@ export const logoutUser = (req, res) => {
 };
 
 export const uploadJobSeekerInfo = async (req, res) => {
-    const { user_id, qualifications, skills, work_experience, certifications, portfolio_url, resume_url } = req.body;
+    const { user_id, qualifications, work_experience, certifications, portfolio_url, resume_url } = req.body;
 
     // Validate required fields
     if (!user_id) {
@@ -128,27 +128,27 @@ export const uploadJobSeekerInfo = async (req, res) => {
     try {
         // Check if the user is a Job Seeker
         const [user] = await con.query("SELECT * FROM user WHERE user_id = ? AND user_type = ?", [user_id, "Job Seeker"]);
-        if (user.length === 0) {
+        if (!user || user.length === 0) {
             return res.status(400).json({ message: "User is not a Job Seeker or does not exist.", success: false });
         }
 
         // Check if job seeker info already exists for the user
         const [existingInfo] = await con.query("SELECT * FROM job_seeker_info WHERE user_id = ?", [user_id]);
-        if (existingInfo.length > 0) {
+        if (existingInfo && existingInfo.length > 0) {
             // Update existing record
             await con.query(
                 `UPDATE job_seeker_info 
-                 SET resume_url = ?, qualifications = ?, skills = ?, work_experience = ?, certifications = ?, portfolio_url = ? 
+                 SET resume_url = ?, qualifications = ?, work_experience = ?, certifications = ?, portfolio_url = ? 
                  WHERE user_id = ?`,
-                [resume_url, qualifications, skills, work_experience, certifications, portfolio_url, user_id]
+                [resume_url, qualifications, work_experience, certifications, portfolio_url, user_id]
             );
             return res.status(200).json({ message: "Job seeker info updated successfully.", success: true });
         } else {
             // Insert new record
             await con.query(
-                `INSERT INTO job_seeker_info (user_id, resume_url, qualifications, skills, work_experience, certifications, portfolio_url) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                [user_id, resume_url, qualifications, skills, work_experience, certifications, portfolio_url]
+                `INSERT INTO job_seeker_info (user_id, resume_url, qualifications, work_experience, certifications, portfolio_url) 
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                [user_id, resume_url, qualifications, work_experience, certifications, portfolio_url]
             );
             return res.status(201).json({ message: "Job seeker info uploaded successfully.", success: true });
         }
@@ -193,6 +193,82 @@ export const uploadEmployerInfo = async (req, res) => {
             );
             return res.status(201).json({ message: "Employer info uploaded successfully.", success: true });
         }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
+
+export const addUserSkillsByName = async (req, res) => {
+    const { user_id, skill_names } = req.body; // `skill_names` should be an array of skill names
+    console.log(skill_names);
+    
+    // Validate required fields
+    if (!user_id || !Array.isArray(skill_names) || skill_names.length === 0) {
+        return res.status(400).json({ message: "User ID and an array of skill names are required.", success: false });
+    }
+
+    try {
+        // Check if the user exists
+        const [user] = await con.query("SELECT * FROM user WHERE user_id = ?", [user_id]);
+        if (!user || user.length === 0) {
+            return res.status(400).json({ message: "User does not exist.", success: false });
+        }
+
+        // Retrieve skill IDs based on skill names
+        const skillIdQuery = `
+            SELECT skill_id FROM skills WHERE skill_name IN (?)
+        `;
+        const [skills] = await con.query(skillIdQuery, [skill_names]);
+
+        if (skills.length === 0) {
+            return res.status(400).json({ message: "No matching skills found.", success: false });
+        }
+
+        // Insert user skills into the user_skills table
+        const skillInsertPromises = skills.map(skill =>
+            con.query("INSERT INTO user_skills (user_id, skill_id) VALUES (?, ?)", [user_id, skill.skill_id])
+        );
+
+        // Execute all insert queries
+        await Promise.all(skillInsertPromises);
+
+        return res.status(201).json({ message: "User skills added successfully.", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
+
+export const applyForJob = async (req, res) => {
+    const { user_id, job_id, status } = req.body;
+
+    // Validate required fields
+    if (!user_id || !job_id) {
+        return res.status(400).json({ message: "User ID and Job ID are required.", success: false });
+    }
+
+    try {
+        // Check if the user exists
+        const [user] = await con.query("SELECT * FROM user WHERE user_id = ?", [user_id]);
+        if (user.length === 0) {
+            return res.status(400).json({ message: "User does not exist.", success: false });
+        }
+
+        // Check if the job exists
+        const [job] = await con.query("SELECT * FROM jobs WHERE job_id = ?", [job_id]);
+        if (job.length === 0) {
+            return res.status(400).json({ message: "Job does not exist.", success: false });
+        }
+
+        // Insert new application
+        await con.query(
+            `INSERT INTO applications (user_id, job_id, status) 
+             VALUES (?, ?, ?)`,
+            [user_id, job_id, status || 'Pending'] // Default to 'Pending' if no status is provided
+        );
+
+        return res.status(201).json({ message: "Job application submitted successfully.", success: true });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error.", success: false });
