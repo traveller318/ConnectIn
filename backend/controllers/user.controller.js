@@ -275,3 +275,100 @@ export const applyForJob = async (req, res) => {
     }
 };
 
+export const updateApplicationStatus = async (req, res) => {
+    const { user_id, job_id, status } = req.body;
+
+    // Validate required fields
+    if (!user_id || !job_id || !status) {
+        return res.status(400).json({ message: "User ID, Job ID, and status are required.", success: false });
+    }
+
+    try {
+        // Check if the application exists
+        const [application] = await con.query(
+            "SELECT * FROM applications WHERE user_id = ? AND job_id = ?",
+            [user_id, job_id]
+        );
+        if (application.length === 0) {
+            return res.status(400).json({ message: "Application does not exist.", success: false });
+        }
+
+        // Update the application status
+        await con.query(
+            "UPDATE applications SET status = ? WHERE user_id = ? AND job_id = ?",
+            [status, user_id, job_id]
+        );
+
+        return res.status(200).json({ message: "Application status updated successfully.", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
+
+export const saveJob = async (req, res) => {
+    const { user_id, job_id } = req.body;
+
+    // Validate required fields
+    if (!user_id || !job_id) {
+        return res.status(400).json({ message: "User ID and Job ID are required.", success: false });
+    }
+
+    try {
+        // Check if the job is already saved by the user
+        const [existing] = await con.query(
+            "SELECT * FROM saved_jobs WHERE user_id = ? AND job_id = ?",
+            [user_id, job_id]
+        );
+
+        if (existing.length > 0) {
+            return res.status(400).json({ message: "Job is already saved.", success: false });
+        }
+
+        // Insert the saved job
+        await con.query(
+            "INSERT INTO saved_jobs (user_id, job_id) VALUES (?, ?)",
+            [user_id, job_id]
+        );
+
+        return res.status(201).json({ message: "Job saved successfully.", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
+
+
+export const getSavedJobs = async (req, res) => {
+    const { user_id } = req.params;
+
+    // Validate user ID
+    if (!user_id) {
+        return res.status(400).json({ message: "User ID is required.", success: false });
+    }
+
+    try {
+        // Query to retrieve saved jobs with job and employer details for the given user
+        const [savedJobs] = await con.query(
+            `SELECT jobs.job_id, jobs.job_title, jobs.job_description, jobs.requirements, 
+                    jobs.salary_range, jobs.job_type, jobs.location, jobs.application_deadline, 
+                    saved_jobs.saved_date,
+                    (SELECT company_name FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS company_name,
+                    (SELECT industry FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS industry,
+                    (SELECT company_website FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS company_website
+             FROM saved_jobs
+             JOIN jobs ON saved_jobs.job_id = jobs.job_id
+             WHERE saved_jobs.user_id = ?`,
+            [user_id]
+        );
+
+        if (savedJobs.length === 0) {
+            return res.status(404).json({ message: "No saved jobs found for this user.", success: false });
+        }
+
+        return res.status(200).json({ savedJobs, success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
