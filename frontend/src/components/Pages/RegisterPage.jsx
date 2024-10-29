@@ -55,7 +55,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
-
+  
     // Basic validation
     if (!formData.firstName) {
       setErrorMessage("First name is required.");
@@ -69,12 +69,14 @@ export default function RegisterPage() {
       setErrorMessage("Email is required.");
       return;
     }
+    
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(formData.email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
+    
     if (!formData.password) {
       setErrorMessage("Password is required.");
       return;
@@ -83,80 +85,84 @@ export default function RegisterPage() {
       setErrorMessage("Password must be at least 6 characters long.");
       return;
     }
+    
     if (!formData.phone) {
       setErrorMessage("Phone number is required.");
       return;
     }
+    
     // Validate phone number format (simple regex for demonstration)
     const phonePattern = /^\+?\d{1,15}$/;
     if (!phonePattern.test(formData.phone)) {
       setErrorMessage("Please enter a valid phone number.");
       return;
     }
+    
     if (!formData.dob) {
       setErrorMessage("Date of birth is required.");
       return;
     }
+    
     if (!formData.gender) {
       setErrorMessage("Gender must be selected.");
       return;
     }
+    
     if (!formData.address) {
       setErrorMessage("Address is required.");
       return;
     }
+    
     if (!formData.city) {
       setErrorMessage("City must be selected.");
       return;
     }
+    
     if (!formData.state) {
       setErrorMessage("State must be selected.");
       return;
     }
+    
     if (!formData.country) {
       setErrorMessage("Country must be selected.");
       return;
     }
+    
     if (!formData.zipCode) {
       setErrorMessage("Zip code is required.");
       return;
     }
-    // Validate zip code format (simple US format for demonstration)
-    const zipPattern = /^\d{5}$/;
-    if (!zipPattern.test(formData.zipCode)) {
-      setErrorMessage("Please enter a valid zip code (5 digits).");
-      return;
-    }
+    
+    
     if (!formData.userType) {
       setErrorMessage("User type must be selected.");
       return;
     }
-
+  
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/users/register",
-        {
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          password: formData.password,
-          phone_number: formData.phone,
-          date_of_birth: formData.dob,
-          gender: formData.gender,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          country: formData.country,
-          zip_code: formData.zipCode,
-          user_type: formData.userType,
-        }
-      );
-
+      const response = await axios.post("http://localhost:3000/api/users/register", {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        phone_number: formData.phone,
+        date_of_birth: formData.dob,
+        gender: formData.gender,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        zip_code: formData.zipCode,
+        user_type: formData.userType,
+      });
+  
       if (response.data.success) {
         setSuccessMessage(response.data.message);
-        if (formData.userType === "job-seeker") {
+  
+        // Navigate based on user type
+        if (formData.userType === "Job Seeker") {
           navigate("/jobSeekerHome");
-        } else if (formData.userType === "employer") {
+        } else if (formData.userType === "Employer") {
           navigate("/employerHome");
         }
       } else {
