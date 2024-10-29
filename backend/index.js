@@ -6,6 +6,7 @@ import cors from 'cors'
 import usersRoutes from './routes/user.route.js'
 
 const app = express()
+app.use(cookieParser())
 const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true
@@ -13,7 +14,6 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 
 
 const port = process.env.PORT || 3000
