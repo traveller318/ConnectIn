@@ -1,11 +1,17 @@
-import { useState } from 'react'
-import { Button } from "./components/ui/button"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './components/Pages/HomePage';
+import LoginPage from './components/Pages/LoginPage';
+import RegisterPage from './components/Pages/RegisterPage';
 
 function App() {
   return (
-    <div className='m-10'>
-      <Button>hello</Button>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </Router>
   )
 }
 

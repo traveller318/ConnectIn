@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const registerUser = async (req, res) => {
     const { 
         first_name, last_name, email, password, phone_number, date_of_birth, gender, 
-        address, city, state, country, zip_code, profile_picture_url, user_type 
+        address, city, state, country, zip_code, user_type 
     } = req.body;
 
     // Validate required fields
@@ -28,10 +28,10 @@ export const registerUser = async (req, res) => {
         await con.query(
             `INSERT INTO user 
             (first_name, last_name, email, password, phone_number, date_of_birth, gender, 
-            address, city, state, country, zip_code, profile_picture_url, user_type, registration_date) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`, 
+            address, city, state, country, zip_code, user_type, registration_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`, 
             [first_name, last_name, email, passwordHash, phone_number, date_of_birth, gender, 
-            address, city, state, country, zip_code, profile_picture_url, user_type]
+            address, city, state, country, zip_code,  user_type]
         );
 
         return res.status(201).json({ message: "User created successfully.", success: true });
