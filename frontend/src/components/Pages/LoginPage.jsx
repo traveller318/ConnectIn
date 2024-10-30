@@ -36,7 +36,8 @@ export default function Component() {
         email,
         password,
         user_type,
-      }, { withCredentials: true })
+      },{
+        withCredentials: true})
 
       // Handle successful response
 

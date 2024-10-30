@@ -33,8 +33,10 @@ export const registerUser = async (req, res) => {
             [first_name, last_name, email, passwordHash, phone_number, date_of_birth, gender, 
             address, city, state, country, zip_code,  user_type]
         );
+        let user = await con.query("SELECT * FROM user WHERE email = ? AND user_type = ? AND first_name = ?", [email, user_type, first_name]);
 
-        return res.status(201).json({ message: "User created successfully.", success: true });
+        user = user[0];
+        return res.status(201).json({ message: "User created successfully.", success: true, user });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error.", success: false });

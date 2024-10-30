@@ -158,12 +158,13 @@ export default function RegisterPage() {
   
       if (response.data.success) {
         setSuccessMessage(response.data.message);
-  
+        
+        const user = response.data.user[0];
         // Navigate based on user type
         if (formData.userType === "Job Seeker") {
-          navigate("/jobSeekerHome");
+          navigate("/after-job-seeker-register", { state: user });
         } else if (formData.userType === "Employer") {
-          navigate("/employerHome");
+          navigate("/after-employer-register", { state: user });
         }
       } else {
         setErrorMessage(response.data.message);
