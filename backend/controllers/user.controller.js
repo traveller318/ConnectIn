@@ -160,6 +160,54 @@ export const uploadJobSeekerInfo = async (req, res) => {
     }
 };
 
+export const getJobSeekerInfo = async (req, res) => {
+    const { user_id } = req.params;
+
+    // Validate that user_id is provided
+    if (!user_id) {
+        return res.status(400).json({ message: "User ID is required.", success: false });
+    }
+
+    try {
+        // Check if the user exists and is a Job Seeker
+        const [user] = await con.query("SELECT * FROM user WHERE user_id = ? AND user_type = ?", [user_id, "Job Seeker"]);
+        if (user.length === 0) {
+            return res.status(404).json({ message: "Job Seeker not found.", success: false });
+        }
+
+        // Retrieve job seeker information
+        const [jobSeekerInfo] = await con.query("SELECT * FROM job_seeker_info WHERE user_id = ?", [user_id]);
+        if (jobSeekerInfo.length === 0) {
+            return res.status(404).json({ message: "Job Seeker information not found.", success: false });
+        }
+
+        // Return the job seeker information
+        return res.status(200).json({ success: true, jobSeekerInfo: jobSeekerInfo[0] });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};
+
+export const getEmployerInfo = async (req, res) => {
+    const { user_id } = req.params;
+
+    try {
+        // Fetch employer info based on the user_id
+        const [employerInfo] = await con.query("SELECT * FROM employer_info WHERE user_id = ?", [user_id]);
+
+        if (employerInfo.length === 0) {
+            return res.status(404).json({ message: "Employer info not found", success: false });
+        }
+
+        return res.status(200).json({ message: "Employer info retrieved successfully", success: true, employerInfo: employerInfo[0] });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
+    }
+};
+
+
 export const uploadEmployerInfo = async (req, res) => {
     const { user_id, company_name, company_website, industry, number_of_employees, company_description, headquarters_location } = req.body;
 

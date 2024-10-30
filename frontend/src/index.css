@@ -4,6 +4,30 @@
 html {
   scroll-behavior: smooth;
 }
+.horizontal-slider {
+  width: 100%; /* Ensure the slider takes the full width of its container */
+  height: 6px; /* Height of the track */
+  margin: 20px 0; /* Add margin to separate from other elements */
+}
+
+.track {
+  background: #ccc; /* Track color */
+  height: 6px; /* Track height */
+  border-radius: 4px; /* Rounded edges for track */
+}
+
+.handle {
+  height: 20px; /* Handle size */
+  width: 20px; /* Handle size */
+  background: #007bff; /* Handle color */
+  border-radius: 50%; /* Round handles */
+  border: 2px solid white; /* Add border for better visibility */
+  cursor: pointer;
+  margin-top: -7px; /* Center the handle vertically */
+}
+
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -30,7 +54,7 @@ html {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -56,7 +80,7 @@ html {
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 @layer base {

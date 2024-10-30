@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo, addUserSkillsByName, applyForJob, updateApplicationStatus, saveJob, getSavedJobs } from "../controllers/user.controller.js";
+import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo, addUserSkillsByName, applyForJob, updateApplicationStatus, saveJob, getSavedJobs, getJobSeekerInfo, getEmployerInfo } from "../controllers/user.controller.js";
 import isAuthenticated  from "../utils/isAuth.js";
 import { addCompanyFAQ, addJobPostingCategories, addOrUpdateJob,getAllJobs, getFAQsAndEmployerInfo, getJobsByCategory } from "../controllers/jobs.controller.js";
 import { addReviewJStoEmp, getEmployerReviews, updateReviewJStoEmp } from "../controllers/reviews.controller.js";
@@ -30,5 +30,7 @@ router.get("/jobs/category/:category_id", getJobsByCategory);
 router.post("/faqs", addCompanyFAQ);
 router.get("/faqs-and-info/:employer_id", getFAQsAndEmployerInfo);
 
+router.get("/job-seeker-info/:user_id", getJobSeekerInfo);
+router.get("/employer-info/:user_id", getEmployerInfo);
 
 export default router;
