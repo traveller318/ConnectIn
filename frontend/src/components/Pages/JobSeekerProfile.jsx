@@ -27,6 +27,20 @@ export default function JobSeekerProfile() {
   const location = useLocation();
   const user = location.state; // Get user from location state
   const [jobSeekerInfo, setJobSeekerInfo] = useState(null);
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/users/logout"
+      );
+      if (response.data.success) {
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchJobSeekerInfo = async () => {
@@ -82,7 +96,10 @@ export default function JobSeekerProfile() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-blue-600">
+                <a
+                  onClick={handleLogout}
+                  className="cursor-pointer text-gray-600 hover:text-blue-600"
+                >
                   Logout
                 </a>
               </li>

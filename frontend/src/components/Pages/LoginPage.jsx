@@ -20,44 +20,42 @@ export default function Component() {
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
   const handleSubmit = async (event) => {
-    event.preventDefault() // Prevent the default form submission
-
-    // Simple validation
+    event.preventDefault();
+  
     if (!email || !password || !user_type) {
-      setMessage('Please fill in all fields.')
-      setIsSuccess(false) // Not a success message
-      return
+      setMessage('Please fill in all fields.');
+      setIsSuccess(false);
+      return;
     }
-
+  
     try {
-      console.log(email, password, user_type);
-      
       const response = await axios.post('http://localhost:3000/api/users/login', {
         email,
         password,
         user_type,
-      },{
-        withCredentials: true})
-
-      // Handle successful response
-
-      setMessage('Login successful!') // Set success message
-      setIsSuccess(true) // Mark as successful
-
-      // Navigate based on user type
-      if (user_type === 'Job Seeker') {
-        navigate('/jobSeekerHome')
-      } else if (user_type === 'Employer') {
-        navigate('/employerHome')
+      }, { withCredentials: true });
+  
+      const { user, success } = response.data;
+  
+      if (success) {
+        setMessage('Login successful!');
+        setIsSuccess(true);
+  
+        // Redirect to the appropriate page with user data in state
+        if (user_type === 'Job Seeker') {
+          navigate('/jobSeekerHome', { state:  user });
+        } else if (user_type === 'Employer') {
+          navigate('/employerHome', { state:  user });
+        }
       }
-
+  
     } catch (error) {
-      // Handle error response
-      console.error('Login failed:', error.response ? error.response.data : error.message)
-      setMessage('Login failed. Please check your credentials.') // Set error message
-      setIsSuccess(false) // Mark as not successful
+      console.error('Login failed:', error.response ? error.response.data : error.message);
+      setMessage('Login failed. Please check your credentials.');
+      setIsSuccess(false);
     }
-  }
+  };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
