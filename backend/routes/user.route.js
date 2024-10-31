@@ -1,7 +1,7 @@
 import express from "express";
 import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo, addUserSkillsByName, applyForJob, updateApplicationStatus, saveJob, getSavedJobs, getJobSeekerInfo, getEmployerInfo } from "../controllers/user.controller.js";
 import isAuthenticated  from "../utils/isAuth.js";
-import { addCompanyFAQ, addJobPostingCategories, addOrUpdateJob,getAllJobs, getFAQsAndEmployerInfo, getJobsByCategory } from "../controllers/jobs.controller.js";
+import { addCompanyFAQ, addJobPostingCategories, addOrUpdateJob,getAllJobs, getFAQsAndEmployerInfo, getJobsByCategory, getJobsByEmployer } from "../controllers/jobs.controller.js";
 import { addReviewJStoEmp, getEmployerReviews, updateReviewJStoEmp } from "../controllers/reviews.controller.js";
 
 const router = express.Router();
@@ -32,5 +32,7 @@ router.get("/faqs-and-info/:employer_id", getFAQsAndEmployerInfo);
 
 router.get("/job-seeker-info/:user_id", getJobSeekerInfo);
 router.get("/employer-info/:user_id", getEmployerInfo);
+router.get("/jobs/employer/:employer_id", getJobsByEmployer);
+
 
 export default router;

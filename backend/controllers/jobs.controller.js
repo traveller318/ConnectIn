@@ -185,3 +185,21 @@ export const getFAQsAndEmployerInfo = async (req, res) => {
         return res.status(500).json({ message: "Internal server error.", success: false });
     }
 };
+
+export const getJobsByEmployer = async (req, res) => {
+    const { employer_id } = req.params;
+
+    try {
+        // Fetch jobs posted by the employer
+        const [jobs] = await con.query("SELECT * FROM jobs WHERE employer_id = ?", [employer_id]);
+
+        if (jobs.length === 0) {
+            return res.status(404).json({ message: "No jobs found for this employer", success: false });
+        }
+
+        return res.status(200).json({ message: "Jobs retrieved successfully", success: true, jobs });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
+    }
+};
