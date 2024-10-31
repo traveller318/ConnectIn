@@ -8,6 +8,7 @@ import AfterJobSeekerRegisterPage from './components/Pages/AfterJobSeekerRegiste
 import AfterEmployerRegisterPage from './components/Pages/AfterEmployerRegisterPage'
 import ArticlePage from './components/Pages/ArticlePage';
 import JobSeekerProfile from './components/Pages/JobSeekerProfile';
+import SavedJobs from './components/Pages/SavedJobs';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/employerHome" element={<EmployerHomePage />} />
         <Route path="/articles" element={<ArticlePage />} />
         <Route path="/job-seeker-profile" element={<JobSeekerProfile />} />
+        <Route path="/saved-jobs" element={<SavedJobs />} />
 
       </Routes>
     </Router>

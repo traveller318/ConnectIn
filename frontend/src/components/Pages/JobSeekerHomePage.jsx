@@ -173,7 +173,11 @@ export default function JobSeekerHomePage() {
                 <BookOpen className="mr-2 h-4 w-4" />
                 Articles
               </Button>
-              <Button variant="ghost" className="flex items-center">
+              <Button
+                variant="ghost"
+                className="flex items-center"
+                onClick={() => navigate("/saved-jobs", { state: user })}
+              >
                 <BookmarkPlus className="mr-2 h-4 w-4" />
                 Saved Jobs
               </Button>
@@ -226,6 +230,7 @@ export default function JobSeekerHomePage() {
               <Button
                 variant="ghost"
                 className="flex items-center w-full justify-start"
+                onClick={() => navigate("/saved-jobs", { state: user })}
               >
                 <BookmarkPlus className="mr-2 h-4 w-4" />
                 Saved Jobs
@@ -233,9 +238,7 @@ export default function JobSeekerHomePage() {
               <Button
                 variant="ghost"
                 className="flex items-center w-full justify-start p-2 text-left text-gray-800 hover:bg-gray-200 transition duration-150 ease-in-out"
-                onClick={() =>
-                  navigate("/job-seeker-profile", { state: user  })
-                } // Using the navigate function
+                onClick={() => navigate("/job-seeker-profile", { state: user })} // Using the navigate function
               >
                 <Avatar>
                   <AvatarImage
