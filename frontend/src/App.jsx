@@ -9,6 +9,7 @@ import AfterEmployerRegisterPage from './components/Pages/AfterEmployerRegisterP
 import ArticlePage from './components/Pages/ArticlePage';
 import JobSeekerProfile from './components/Pages/JobSeekerProfile';
 import SavedJobs from './components/Pages/SavedJobs';
+import EmployerProfile from './components/Pages/EmployerProfile';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/articles" element={<ArticlePage />} />
         <Route path="/job-seeker-profile" element={<JobSeekerProfile />} />
         <Route path="/saved-jobs" element={<SavedJobs />} />
-
+        <Route path="/employer-profile" element={<EmployerProfile />} />      
       </Routes>
     </Router>
   )

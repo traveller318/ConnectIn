@@ -37,16 +37,21 @@ import {
   Youtube,
 } from "lucide-react";
 import { format } from "date-fns";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const jobTypes = ["Full-time", "Part-time", "Contract", "Internship"];
 
 export default function EmployerHomePage() {
+  const navigate = useNavigate();
   const location = useLocation();
   const user = location.state;
   const employerId = user?.user_id;
   const mainRef = useRef(null);
   console.log(user);
+
+  const navigateToProfile = () => {
+    navigate("/employer-profile", { state:  user  });
+  };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [jobs, setJobs] = useState([]); // Holds posted jobs
@@ -243,7 +248,7 @@ export default function EmployerHomePage() {
                 </DialogContent>
               </Dialog>
 
-              <Avatar className="ml-4">
+              <Avatar className="ml-4" onClick={navigateToProfile}>
                 <AvatarImage
                   src="https://github.com/shadcn.png"
                   alt="@shadcn"
@@ -349,7 +354,11 @@ export default function EmployerHomePage() {
                   </form>
                 </DialogContent>
               </Dialog>
-              <Button variant="ghost" className="w-full justify-start">
+              <Button
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={navigateToProfile}
+              >
                 Profile
               </Button>
             </div>
