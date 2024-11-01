@@ -416,3 +416,33 @@ export const getSavedJobs = async (req, res) => {
         return res.status(500).json({ message: "Internal server error.", success: false });
     }
 };
+
+export const getApplicantsByJob = async (req, res) => {
+    const { job_id } = req.params;
+
+    try {
+        // Fetch applicants for the specified job
+        const [applicants] = await con.query(`
+            SELECT 
+                applications.user_id, applications.status, user.first_name, user.last_name, user.email,
+                job_seeker_info.qualifications, job_seeker_info.work_experience, job_seeker_info.resume_url 
+            FROM 
+                applications
+            JOIN 
+                user ON applications.user_id = user.user_id
+            LEFT JOIN 
+                job_seeker_info ON applications.user_id = job_seeker_info.user_id
+            WHERE 
+                applications.job_id = ?
+        `, [job_id]);
+
+        if (applicants.length === 0) {
+            return res.status(404).json({ message: "No applicants found for this job", success: false });
+        }
+
+        return res.status(200).json({ message: "Applicants retrieved successfully", success: true, applicants });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
+    }
+};

@@ -99,6 +99,10 @@ export default function EmployerHomePage() {
     setNewJob((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleViewApplicants = (jobId) => {
+    navigate("/view-applicants", { state: { job_id: jobId,user } });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -395,7 +399,11 @@ export default function EmployerHomePage() {
               </CardContent>
 
               <CardFooter>
-                <Button variant="outline" className="w-full">
+              <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => handleViewApplicants(job.job_id)}
+                >
                   <Users className="h-4 w-4 mr-2" />
                   View Applicants
                 </Button>

@@ -1,7 +1,7 @@
 import express from "express";
-import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo, addUserSkillsByName, applyForJob, updateApplicationStatus, saveJob, getSavedJobs, getJobSeekerInfo, getEmployerInfo } from "../controllers/user.controller.js";
+import { registerUser, loginUser, logoutUser, uploadJobSeekerInfo,uploadEmployerInfo, addUserSkillsByName, applyForJob, updateApplicationStatus, saveJob, getSavedJobs, getJobSeekerInfo, getEmployerInfo, getApplicantsByJob } from "../controllers/user.controller.js";
 import isAuthenticated  from "../utils/isAuth.js";
-import { addCompanyFAQ, addJobPostingCategories, addOrUpdateJob,getAllJobs, getFAQsAndEmployerInfo, getJobsByCategory, getJobsByEmployer } from "../controllers/jobs.controller.js";
+import { addCompanyFAQ, addOrUpdateJob,getAllJobs, getFAQsAndEmployerInfo, getJobsByEmployer } from "../controllers/jobs.controller.js";
 import { addReviewJStoEmp, getEmployerReviews, updateReviewJStoEmp } from "../controllers/reviews.controller.js";
 
 const router = express.Router();
@@ -25,14 +25,13 @@ router.post("/review",  addReviewJStoEmp);
 router.put("/review",  updateReviewJStoEmp);
 router.get("/employer/:employer_id/reviews", getEmployerReviews);
 
-router.post("/add-job-posting-categories", addJobPostingCategories);
-router.get("/jobs/category/:category_id", getJobsByCategory);
-router.post("/faqs", addCompanyFAQ);
-router.get("/faqs-and-info/:employer_id", getFAQsAndEmployerInfo);
+router.post("/faqs", addCompanyFAQ);getFAQsAndEmployerInfo
+router.get("/faqs-and-info/:employer_id", );
 
 router.get("/job-seeker-info/:user_id", getJobSeekerInfo);
 router.get("/employer-info/:user_id", getEmployerInfo);
 router.get("/jobs/employer/:employer_id", getJobsByEmployer);
+router.get("/applicants/job/:job_id", getApplicantsByJob);
 
 
 export default router;

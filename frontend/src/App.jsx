@@ -10,6 +10,7 @@ import ArticlePage from './components/Pages/ArticlePage';
 import JobSeekerProfile from './components/Pages/JobSeekerProfile';
 import SavedJobs from './components/Pages/SavedJobs';
 import EmployerProfile from './components/Pages/EmployerProfile';
+import ViewApplicantsPage from './components/Pages/ViewApplicantsPage';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
         <Route path="/articles" element={<ArticlePage />} />
         <Route path="/job-seeker-profile" element={<JobSeekerProfile />} />
         <Route path="/saved-jobs" element={<SavedJobs />} />
-        <Route path="/employer-profile" element={<EmployerProfile />} />      
+        <Route path="/employer-profile" element={<EmployerProfile />} />
+        <Route path="/view-applicants" element={<ViewApplicantsPage />} />      
       </Routes>
     </Router>
   )
