@@ -155,12 +155,7 @@ export default function JobSeekerProfile() {
               Joined on: {formatDate(user.registration_date)}
             </div>
 
-            <div className="mt-8 space-y-4">
-              <Button className="w-full sm:w-auto">
-                <PencilIcon className="w-4 h-4 mr-2" />
-                Edit Profile
-              </Button>
-            </div>
+            
           </CardContent>
         </Card>
 

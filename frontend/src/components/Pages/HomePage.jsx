@@ -25,29 +25,35 @@ import {
   MapPin,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/login');
+  };
   const jobList = [
     {
       title: "Software Engineer",
       company: "BlackRock",
       salary: "$90,000 - $130,000",
       logo: blackrock_logo,
-      bgColor: "bg-gray-200", // Example color for BlackRock logo
+      bgColor: "bg-gray-200",
     },
     {
       title: "Product Manager",
       company: "Google",
       salary: "$120,000 - $150,000",
       logo: google_logo,
-      bgColor: "bg-black", // Black background for Google logo
+      bgColor: "bg-black",
     },
     {
       title: "Data Scientist",
       company: "NVIDIA",
       salary: "$100,000 - $140,000",
       logo: nvidia_logo,
-      bgColor: "bg-green-200", // Example color for NVIDIA logo
+      bgColor: "bg-green-200",
     },
   ];
 
@@ -59,42 +65,83 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gray-50 text-gray-800"
+    >
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
+        className="bg-white shadow-sm"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center">
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex items-center"
+          >
             <Briefcase className="h-8 w-8 text-blue-600 mr-2" />
             <span className="font-bold text-xl text-blue-600">ConnectIn</span>
-          </div>
+          </motion.div>
           <nav className="hidden md:flex space-x-4">
-            <a href="#job-search" className="text-gray-600 hover:text-blue-600">
+            <motion.a
+              href="#job-search"
+              className="text-gray-600 hover:text-blue-600"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Find Jobs
-            </a>
-            <a href="#companies" className="text-gray-600 hover:text-blue-600">
+            </motion.a>
+            <motion.a
+              href="#companies"
+              className="text-gray-600 hover:text-blue-600"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Companies
-            </a>
-            <a href="#advices" className="text-gray-600 hover:text-blue-600">
+            </motion.a>
+            <motion.a
+              href="#advices"
+              className="text-gray-600 hover:text-blue-600"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Career Advice
-            </a>
+            </motion.a>
           </nav>
           <div className="flex items-center space-x-4">
             <Link to="/login">
-              <button className="bg-white text-blue-600 font-semibold py-2 px-4 border border-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition duration-300">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white text-blue-600 font-semibold py-2 px-4 border border-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition duration-300"
+              >
                 Login
-              </button>
+              </motion.button>
             </Link>
             <Link to="/register">
-              <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300"
+              >
                 Register
-              </button>
+              </motion.button>
             </Link>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
-      <section
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
         className="relative h-[600px] bg-cover bg-center"
         style={{
           backgroundImage: `url(${img1})`,
@@ -104,30 +151,59 @@ export default function HomePage() {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 leading-tight">
+          <motion.h1
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold text-center mb-4 leading-tight"
+          >
             Discover Your Next Career Move
-          </h1>
-          <p className="text-xl md:text-2xl text-center mb-8 max-w-2xl">
+          </motion.h1>
+          <motion.p
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-xl md:text-2xl text-center mb-8 max-w-2xl"
+          >
             Connecting talent with opportunity, everywhere. Find your dream job
             or hire the best talent.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          </motion.p>
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="flex flex-wrap justify-center gap-4"
+          >
             <Link to="/login">
-              <button className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
+              >
                 Find Jobs
-              </button>
+              </motion.button>
             </Link>
             <Link to="/login">
-              <button className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
+              >
                 Post a Job
-              </button>
+              </motion.button>
             </Link>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Search Bar */}
-      <section className="bg-white py-12 px-4 shadow-md" id="job-search">
+      <motion.section
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="bg-white py-12 px-4 shadow-md"
+        id="job-search"
+      >
         <div className="max-w-5xl mx-auto">
           <form className="flex flex-wrap gap-4">
             <div className="flex-grow">
@@ -162,12 +238,15 @@ export default function HomePage() {
                 />
               </div>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition duration-300"
+              onClick={handleButtonClick}
             >
               Search Jobs
-            </button>
+            </motion.button>
           </form>
           <div className="mt-4 flex flex-wrap justify-center gap-4">
             <label className="inline-flex items-center">
@@ -188,75 +267,115 @@ export default function HomePage() {
             </label>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Trending Jobs & Featured Companies */}
       <section className="py-16 px-4" id="companies">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">Trending Jobs</h2>
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-8 text-center"
+          >
+            Trending Jobs
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {jobList.map((job, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center justify-between"
               >
-                {/* Avatar logo with conditional background color */}
                 <div
-                  className={`w-20 h-20 rounded-full flex items-center justify-center ${job.bgColor}`} // Increased size from w-14 h-14 to w-20 h-20
+                  className={`w-20 h-20 rounded-full flex items-center justify-center ${job.bgColor}`}
                 >
                   <img
                     src={job.logo}
                     alt={`${job.company} logo`}
-                    className="w-16 h-16 object-contain" // Increased size from w-10 h-10 to w-16 h-16
+                    className="w-16 h-16 object-contain"
                   />
                 </div>
-
-                {/* Job content */}
                 <div>
                   <h3 className="text-xl font-semibold mb-2">{job.title}</h3>
                   <p className="text-gray-600 mb-2">{job.company}</p>
                   <p className="text-green-600 font-semibold mb-4">
                     {job.salary}
                   </p>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                  >
                     Quick Apply
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           <div className="mt-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-3xl font-bold mb-8 text-center"
+            >
               Featured Companies
-            </h2>
+            </motion.h2>
             <div className="flex flex-wrap justify-center gap-8">
               {companies.map((company, index) => (
-                <div key={index} className="text-center">
+                <motion.div
+                  key={index}
+                  initial={{ 
+ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: index * 0.1, type: "spring" }}
+                  whileHover={{ scale: 1.1 }}
+                  className="text-center"
+                >
                   <img
                     src={company.logo}
                     alt={`${company.name} Logo`}
-                    className={`w-24 h-24 mx-auto mb-2 rounded-full shadow-md ${company.bgColor} p-2`} // Background color applied to the image itself with padding
+                    className={`w-24 h-24 mx-auto mb-2 rounded-full shadow-md ${company.bgColor} p-2`}
                   />
                   <p className="font-semibold">{company.name}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-          <div className="text-center mt-12">
-            <button className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-center mt-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full transition duration-300"
+              onClick={handleButtonClick}
+            >
               View All Companies
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="bg-gray-100 py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
             Why Choose JobPortal
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
               {
@@ -281,14 +400,25 @@ export default function HomePage() {
                 description: "Access resume templates and interview tips.",
               },
             ].map((benefit, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300"
               >
-                <div className="flex justify-center">{benefit.icon}</div>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: index * 0.1 + 0.3, type: "spring" }}
+                  className="flex justify-center"
+                >
+                  {benefit.icon}
+                </motion.div>
                 <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -297,7 +427,14 @@ export default function HomePage() {
       {/* How It Works */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">How It Works</h2>
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
+            How It Works
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <h3 className="text-2xl font-semibold mb-6">For Job Seekers</h3>
@@ -308,12 +445,18 @@ export default function HomePage() {
                   "Apply with Ease",
                   "Get Hired!",
                 ].map((step, index) => (
-                  <li key={index} className="flex items-center">
+                  <motion.li
+                    key={index}
+                    initial={{ x: -20, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center"
+                  >
                     <span className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4">
                       {index + 1}
                     </span>
                     <span>{step}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ol>
             </div>
@@ -326,30 +469,51 @@ export default function HomePage() {
                   "Review Applications",
                   "Hire Talent",
                 ].map((step, index) => (
-                  <li key={index} className="flex items-center">
+                  <motion.li
+                    key={index}
+                    initial={{ x: 20, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center"
+                  >
                     <span className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4">
                       {index + 1}
                     </span>
                     <span>{step}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ol>
             </div>
           </div>
-          <div className="text-center mt-12">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-center mt-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300"
+              onClick={handleButtonClick}
+            >
               Learn More
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* Job Categories */}
       <section className="bg-gray-100 py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
             Job Categories
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               "IT & Software",
@@ -360,29 +524,48 @@ export default function HomePage() {
               "Design",
               "Sales",
               "Engineering",
-            ].map((category) => (
-              <div
+            ].map((category, index) => (
+              <motion.div
                 key={category}
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300 cursor-pointer"
               >
                 <h3 className="font-semibold text-lg">{category}</h3>
-              </div>
+              </motion.div>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <button className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-center mt-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full transition duration-300"
+              onClick={handleButtonClick}
+            >
               Explore More Categories
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
             Success Stories
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {[
               {
@@ -402,8 +585,12 @@ export default function HomePage() {
                   "We've found amazing talent through JobPortal. It's our go-to platform for hiring.",
               },
             ].map((testimonial, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300"
               >
                 <p className="text-gray-600 mb-6 italic">
@@ -422,7 +609,7 @@ export default function HomePage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -431,9 +618,14 @@ export default function HomePage() {
       {/* Career Advice */}
       <section className="bg-gray-100 py-16 px-4" id="advices">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
             Latest Career Advice
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -453,8 +645,12 @@ export default function HomePage() {
                 image: `${article_img3}?height=200&width=300`,
               },
             ].map((article, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300"
               >
                 <img
@@ -467,26 +663,42 @@ export default function HomePage() {
                     {article.title}
                   </h3>
                   <p className="text-gray-600 mb-4">{article.excerpt}</p>
-                  <a
+                  <motion.a
                     href="#"
                     className="text-blue-600 hover:underline flex items-center"
+                    whileHover={{ x: 5 }}
                   >
                     Read More <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  </motion.a>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-center mt-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300"
+              onClick={handleButtonClick}
+            >
               View All Articles
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* Job Alerts Subscription */}
-      <section className="py-16 px-4 bg-blue-600 text-white">
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="py-16 px-4 bg-blue-600 text-white"
+      >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">
             Stay Updated! Get the Latest Job Alerts
@@ -497,16 +709,19 @@ export default function HomePage() {
               placeholder="Enter your email"
               className="w-full sm:w-96 p-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               type="submit"
+              onClick={handleButtonClick}
               className="w-full sm:w-auto bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300"
             >
               Subscribe
-            </button>
+            </motion.button>
           </form>
           <p className="mt-4 text-sm">No spam, only relevant job alerts.</p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12 px-4">
@@ -631,6 +846,6 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 }
