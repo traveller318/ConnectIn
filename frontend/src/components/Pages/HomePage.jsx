@@ -184,7 +184,7 @@ export default function HomePage() {
             </label>
             <label className="inline-flex items-center">
               <input type="checkbox" className="form-checkbox text-blue-600" />
-              <span className="ml-2">Contract</span>
+              <span className="ml-2">Internship</span>
             </label>
           </div>
         </div>

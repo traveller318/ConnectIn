@@ -446,3 +446,38 @@ export const getApplicantsByJob = async (req, res) => {
         return res.status(500).json({ message: "Internal server error", success: false });
     }
 };
+
+// controllers/jobController.js
+export const getAppliedJobs = async (req, res) => {
+    const { user_id } = req.params;
+
+    // Validate user ID
+    if (!user_id) {
+        return res.status(400).json({ message: "User ID is required.", success: false });
+    }
+
+    try {
+        // Query to retrieve applied jobs with job details and status for the given user
+        const [appliedJobs] = await con.query(
+            `SELECT jobs.job_id, jobs.job_title, jobs.job_description, jobs.requirements, 
+                    jobs.salary_range, jobs.job_type, jobs.location, jobs.application_deadline, 
+                    applications.status,
+                    (SELECT company_name FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS company_name,
+                    (SELECT industry FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS industry,
+                    (SELECT company_website FROM employer_info WHERE employer_info.user_id = jobs.employer_id) AS company_website
+             FROM applications
+             JOIN jobs ON applications.job_id = jobs.job_id
+             WHERE applications.user_id = ?`,
+            [user_id]
+        );
+
+        if (appliedJobs.length === 0) {
+            return res.status(404).json({ message: "No applied jobs found for this user.", success: false });
+        }
+
+        return res.status(200).json({ appliedJobs, success: true });
+    } catch (error) {
+        console.error("Error fetching applied jobs:", error);
+        return res.status(500).json({ message: "Internal server error.", success: false });
+    }
+};

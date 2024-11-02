@@ -43,6 +43,7 @@ export default function JobSeekerHomePage() {
   const location = useLocation(); // Get the location object
   const user = location.state;
   const jobListingsRef = useRef(null);
+  const [appliedJobs, setAppliedJobs] = useState([]); // State to hold applied job IDs
   const [savedJobs, setSavedJobs] = useState([]); // State to hold saved job IDs
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
@@ -85,9 +86,70 @@ export default function JobSeekerHomePage() {
     fetchJobListings();
   }, []); // Empty dependency array means this runs once on mount
 
+  useEffect(() => {
+    const fetchUserJobStatus = async () => {
+      try {
+        // Fetch saved jobs
+        const savedResponse = await axios.get(
+          `http://localhost:3000/api/users/saved-jobs/${user.user_id}`
+        );
+        console.log(savedResponse);
+
+        if (savedResponse.data.success) {
+          const savedJobIds = savedResponse.data.savedJobs.map(
+            (job) => job.job_id
+          );
+          setSavedJobs(savedJobIds);
+        } else {
+          console.log(savedResponse.data.message); // Log the message if no saved jobs found
+          setSavedJobs([]); // Set saved jobs to an empty array
+        }
+
+        // Fetch applied jobs
+        const appliedResponse = await axios.get(
+          `http://localhost:3000/api/users/${user.user_id}/applied-jobs`
+        );
+        console.log(appliedResponse);
+
+        if (appliedResponse.data.success) {
+          const appliedJobIds = appliedResponse.data.appliedJobs.map(
+            (job) => job.job_id
+          );
+          setAppliedJobs(appliedJobIds);
+        } else {
+          console.log(appliedResponse.data.message); // Log the message if no applied jobs found
+          setAppliedJobs([]); // Set applied jobs to an empty array
+        }
+      } catch (error) {
+        console.error("Error fetching job status:", error);
+      }
+    };
+
+    fetchUserJobStatus();
+  }, [user.user_id]);
+
   const scrollToJobListings = () => {
     if (jobListingsRef.current) {
       jobListingsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleApplyJob = async (jobId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/users/apply-for-job",
+        {
+          user_id: user.user_id, // Use the user ID from state
+          job_id: jobId,
+          status: "Pending",
+        }
+      );
+
+      if (response.data.success) {
+        setAppliedJobs([...appliedJobs, jobId]); // Mark job as applied
+      }
+    } catch (error) {
+      console.error("Error applying for job:", error);
     }
   };
 
@@ -357,15 +419,24 @@ export default function JobSeekerHomePage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button
-                    variant="outline"
-                    className={`w-full ${
-                      savedJobs.includes(job.id) ? "bg-black text-white" : ""
-                    }`}
-                    onClick={() => handleSaveJob(job.id)}
-                  >
-                    {savedJobs.includes(job.id) ? "Saved" : "Save Job"}
-                  </Button>
+                  <div className="flex gap-2 w-full">
+                    <Button
+                      variant="outline"
+                      className={`flex-1 `}
+                      onClick={() => handleSaveJob(job.id)}
+                      disabled={savedJobs.includes(job.id)}
+                    >
+                      {savedJobs.includes(job.id) ? "Saved" : "Save Job"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => handleApplyJob(job.id)}
+                      disabled={appliedJobs.includes(job.id)} // Disable if job is applied
+                    >
+                      {appliedJobs.includes(job.id) ? "Applied" : "Apply Job"}
+                    </Button>
+                  </div>
                 </CardFooter>
               </Card>
             ))
