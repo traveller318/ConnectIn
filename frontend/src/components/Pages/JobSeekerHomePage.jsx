@@ -453,7 +453,7 @@ export default function JobSeekerHomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4">ConnectIn</h3>
-              <p>Connecting you to your next opportunity.</p>
+              <p>{new Date().getFullYear()} All rights reserved. Designed by traveller31</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>

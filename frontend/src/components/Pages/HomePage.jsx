@@ -831,7 +831,7 @@ export default function HomePage() {
         </div>
         <div className="mt-12 text-center text-sm text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} JobPortal. All rights reserved.
+            &copy; {new Date().getFullYear()} All rights reserved. Designed by traveller31
           </p>
           <div className="mt-2 space-x-4">
             <a href="#" className="hover:text-white">

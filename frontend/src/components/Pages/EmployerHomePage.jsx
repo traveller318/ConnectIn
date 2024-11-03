@@ -553,7 +553,7 @@ export default function EmployerHomePage() {
           </div>
           <Separator className="my-8 bg-gray-700" />
           <p className="text-center text-gray-400">
-            © {new Date().getFullYear()} ConnectIn. All rights reserved.
+            © {new Date().getFullYear()} All rights reserved. Designed by traveller31
           </p>
         </div>
       </footer>

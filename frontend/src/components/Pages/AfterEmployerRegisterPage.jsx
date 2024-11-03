@@ -347,7 +347,7 @@ export default function AfterEmployerRegisterPage() {
           <Separator className="my-8 bg-gray-400" />
 
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-200">
-            <p>© {currentYear} ConnectIn Corporation. All rights reserved.</p>
+            <p>© {currentYear} All rights reserved. Designed by traveller31 </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <a href="#" className="hover:text-white transition-colors">
                 Accessibility

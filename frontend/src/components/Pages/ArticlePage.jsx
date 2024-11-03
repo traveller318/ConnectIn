@@ -294,8 +294,7 @@ export default function ArticlePage() {
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
             <p>
-              &copy; {new Date().getFullYear()} Software Industry Articles. All
-              rights reserved.
+              &copy; {new Date().getFullYear()} All rights reserved. Designed by traveller31
             </p>
           </div>
         </div>

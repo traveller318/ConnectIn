@@ -173,7 +173,7 @@ const ViewApplicantsPage = () => {
       <footer className="bg-white border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <p className="text-sm text-gray-500">
-            &copy; 2023 Your Company. All rights reserved.
+            &copy; {new Date().getFullYear()} All rights reserved. Designed by traveller31
           </p>
           <nav className="flex space-x-4">
             <a href="#" className="text-sm text-gray-500 hover:text-gray-900">

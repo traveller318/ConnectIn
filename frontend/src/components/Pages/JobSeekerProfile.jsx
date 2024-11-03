@@ -352,8 +352,7 @@ export default function JobSeekerProfile() {
           </div>
           <div className="mt-8 border-t border-gray-200 pt-8">
             <p className="text-base text-gray-400 xl:text-center">
-              &copy; {new Date().getFullYear()} ConnectIn, Inc. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} All rights reserved. Designed by traveller31
             </p>
           </div>
         </div>
