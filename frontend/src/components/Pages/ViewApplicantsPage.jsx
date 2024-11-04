@@ -21,7 +21,11 @@ const ViewApplicantsPage = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
 
-  const { job_id, user } = location.state;
+  const obj = location.state;
+  console.log(obj);
+  
+  const job_id = obj.job_id;
+  const user = obj.user;
 
   const handleBackButtonClick = () => {
     navigate("/employerHome", { state: user }); // Navigate with user object
