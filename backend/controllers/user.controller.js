@@ -438,33 +438,29 @@ export const getSavedJobs = async (req, res) => {
 
 export const getApplicantsByJob = async (req, res) => {
     const { job_id } = req.params;
-
+  
     try {
-        // Fetch applicants for the specified job
-        const [applicants] = await con.query(`
-            SELECT 
-                applications.user_id, applications.status, user.first_name, user.last_name, user.email,
-                job_seeker_info.qualifications, job_seeker_info.work_experience, job_seeker_info.resume_url 
-            FROM 
-                applications
-            JOIN 
-                user ON applications.user_id = user.user_id
-            LEFT JOIN 
-                job_seeker_info ON applications.user_id = job_seeker_info.user_id
-            WHERE 
-                applications.job_id = ?
-        `, [job_id]);
-
-        if (applicants.length === 0) {
-            return res.status(404).json({ message: "No applicants found for this job", success: false });
-        }
-
-        return res.status(200).json({ message: "Applicants retrieved successfully", success: true, applicants });
+      // Fetch applicants for the specified job from the view
+      const [applicants] = await con.query(`
+        SELECT 
+          user_id, job_id, status, first_name, last_name, email, qualifications, work_experience, resume_url 
+        FROM 
+          active_applicants_view
+        WHERE 
+          job_id = ?
+      `, [job_id]);
+  
+      if (applicants.length === 0) {
+        return res.status(404).json({ message: "No active applicants found for this job", success: false });
+      }
+  
+      return res.status(200).json({ message: "Applicants retrieved successfully", success: true, applicants });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error", success: false });
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error", success: false });
     }
-};
+  };
+  
 
 // controllers/jobController.js
 export const getAppliedJobs = async (req, res) => {
