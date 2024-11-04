@@ -201,6 +201,25 @@ export const getEmployerInfo = async (req, res) => {
     }
 };
 
+export const deleteApplication = async (req, res) => {
+    const { user_id, job_id } = req.body;
+  
+    try {
+      const [result] = await con.query(
+        'DELETE FROM applications WHERE user_id = ? AND job_id = ?',
+        [user_id, job_id]
+      );
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Application not found" });
+      }
+  
+      res.status(200).json({ message: "Application deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to delete application" });
+    }
+  };
 
 export const uploadEmployerInfo = async (req, res) => {
     const { user_id, company_name, company_website, industry, number_of_employees, company_description, headquarters_location } = req.body;

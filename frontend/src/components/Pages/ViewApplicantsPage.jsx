@@ -20,7 +20,7 @@ const ViewApplicantsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const location = useLocation();
-  
+
   const { job_id, user } = location.state;
 
   const handleBackButtonClick = () => {
@@ -29,17 +29,41 @@ const ViewApplicantsPage = () => {
 
   const handleApplicationStatusUpdate = async (applicantId, status) => {
     try {
-      await axios.put("http://localhost:3000/api/users/update-application-status", {
-        user_id: applicantId,
-        job_id: job_id,
-        status: status,
-      });
-      // Update the local state to reflect the change
-      setApplicants((prevApplicants) =>
-        prevApplicants.map((applicant) =>
-          applicant.user_id === applicantId ? { ...applicant, status: status } : applicant
-        )
+      // Update the application status
+      await axios.put(
+        "http://localhost:3000/api/users/update-application-status",
+        {
+          user_id: applicantId,
+          job_id: job_id,
+          status: status,
+        }
       );
+
+      // If status is "Accepted", delete the application
+      if (status === "Accepted") {
+        await axios.delete(
+          "http://localhost:3000/api/users/delete-application",
+          {
+            data: { user_id: applicantId, job_id: job_id },
+          }
+        );
+
+        // Remove the deleted applicant from the local state
+        setApplicants((prevApplicants) =>
+          prevApplicants.filter(
+            (applicant) => applicant.user_id !== applicantId
+          )
+        );
+      } else {
+        // Otherwise, just update the status in local state
+        setApplicants((prevApplicants) =>
+          prevApplicants.map((applicant) =>
+            applicant.user_id === applicantId
+              ? { ...applicant, status: status }
+              : applicant
+          )
+        );
+      }
     } catch (err) {
       setError("Failed to update application status");
     }
@@ -146,7 +170,12 @@ const ViewApplicantsPage = () => {
                       size="sm"
                       variant="outline"
                       className="text-green-600 border-green-600 hover:bg-green-50"
-                      onClick={() => handleApplicationStatusUpdate(applicant.user_id, "Accepted")}
+                      onClick={() =>
+                        handleApplicationStatusUpdate(
+                          applicant.user_id,
+                          "Accepted"
+                        )
+                      }
                       disabled={applicant.status !== "Pending"}
                     >
                       <Check className="h-4 w-4 mr-1" />
@@ -156,7 +185,12 @@ const ViewApplicantsPage = () => {
                       size="sm"
                       variant="outline"
                       className="text-red-600 border-red-600 hover:bg-red-50"
-                      onClick={() => handleApplicationStatusUpdate(applicant.user_id, "Rejected")}
+                      onClick={() =>
+                        handleApplicationStatusUpdate(
+                          applicant.user_id,
+                          "Rejected"
+                        )
+                      }
                       disabled={applicant.status !== "Pending"}
                     >
                       <X className="h-4 w-4 mr-1" />
@@ -173,7 +207,8 @@ const ViewApplicantsPage = () => {
       <footer className="bg-white border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} All rights reserved. Designed by traveller31
+            &copy; {new Date().getFullYear()} All rights reserved. Designed by
+            traveller31
           </p>
           <nav className="flex space-x-4">
             <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
