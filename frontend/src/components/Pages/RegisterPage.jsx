@@ -55,7 +55,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
-  
+
     // Basic validation
     if (!formData.firstName) {
       setErrorMessage("First name is required.");
@@ -69,14 +69,14 @@ export default function RegisterPage() {
       setErrorMessage("Email is required.");
       return;
     }
-    
+
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(formData.email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
-    
+
     if (!formData.password) {
       setErrorMessage("Password is required.");
       return;
@@ -85,80 +85,82 @@ export default function RegisterPage() {
       setErrorMessage("Password must be at least 6 characters long.");
       return;
     }
-    
+
     if (!formData.phone) {
       setErrorMessage("Phone number is required.");
       return;
     }
-    
+
     // Validate phone number format (simple regex for demonstration)
     const phonePattern = /^\+?\d{1,15}$/;
     if (!phonePattern.test(formData.phone)) {
       setErrorMessage("Please enter a valid phone number.");
       return;
     }
-    
+
     if (!formData.dob) {
       setErrorMessage("Date of birth is required.");
       return;
     }
-    
+
     if (!formData.gender) {
       setErrorMessage("Gender must be selected.");
       return;
     }
-    
+
     if (!formData.address) {
       setErrorMessage("Address is required.");
       return;
     }
-    
+
     if (!formData.city) {
       setErrorMessage("City must be selected.");
       return;
     }
-    
+
     if (!formData.state) {
       setErrorMessage("State must be selected.");
       return;
     }
-    
+
     if (!formData.country) {
       setErrorMessage("Country must be selected.");
       return;
     }
-    
+
     if (!formData.zipCode) {
       setErrorMessage("Zip code is required.");
       return;
     }
-    
-    
+
     if (!formData.userType) {
       setErrorMessage("User type must be selected.");
       return;
     }
-  
+
     try {
-      const response = await axios.post("http://localhost:3000/api/users/register", {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        phone_number: formData.phone,
-        date_of_birth: formData.dob,
-        gender: formData.gender,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        country: formData.country,
-        zip_code: formData.zipCode,
-        user_type: formData.userType,
-      });
-  
+      const response = await axios.post(
+        "http://localhost:3000/api/users/register",
+        {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          phone_number: formData.phone,
+          date_of_birth: formData.dob,
+          gender: formData.gender,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          country: formData.country,
+          zip_code: formData.zipCode,
+          user_type: formData.userType,
+        }
+      );
+
       if (response.data.success) {
         setSuccessMessage(response.data.message);
-        
+
         const user = response.data.user[0];
         // Navigate based on user type
         if (formData.userType === "Job Seeker") {
@@ -308,10 +310,21 @@ export default function RegisterPage() {
                     <SelectValue placeholder="Select city" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="new-york">New York</SelectItem>
-                    <SelectItem value="los-angeles">Los Angeles</SelectItem>
-                    <SelectItem value="chicago">Chicago</SelectItem>
-                    {/* Add more cities as needed */}
+                    <SelectItem value="mumbai">Mumbai</SelectItem>
+                    <SelectItem value="delhi">Delhi</SelectItem>
+                    <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                    <SelectItem value="hyderabad">Hyderabad</SelectItem>
+                    <SelectItem value="ahmedabad">Ahmedabad</SelectItem>
+                    <SelectItem value="chennai">Chennai</SelectItem>
+                    <SelectItem value="kolkata">Kolkata</SelectItem>
+                    <SelectItem value="pune">Pune</SelectItem>
+                    <SelectItem value="jaipur">Jaipur</SelectItem>
+                    <SelectItem value="lucknow">Lucknow</SelectItem>
+                    <SelectItem value="kanpur">Kanpur</SelectItem>
+                    <SelectItem value="nagpur">Nagpur</SelectItem>
+                    <SelectItem value="indore">Indore</SelectItem>
+                    <SelectItem value="bhopal">Bhopal</SelectItem>
+                    <SelectItem value="visakhapatnam">Visakhapatnam</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -327,10 +340,46 @@ export default function RegisterPage() {
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ny">New York</SelectItem>
-                    <SelectItem value="ca">California</SelectItem>
-                    <SelectItem value="il">Illinois</SelectItem>
-                    {/* Add more states as needed */}
+                    <SelectItem value="ap">Andhra Pradesh</SelectItem>
+                    <SelectItem value="ar">Arunachal Pradesh</SelectItem>
+                    <SelectItem value="as">Assam</SelectItem>
+                    <SelectItem value="br">Bihar</SelectItem>
+                    <SelectItem value="ct">Chhattisgarh</SelectItem>
+                    <SelectItem value="ga">Goa</SelectItem>
+                    <SelectItem value="gj">Gujarat</SelectItem>
+                    <SelectItem value="hr">Haryana</SelectItem>
+                    <SelectItem value="hp">Himachal Pradesh</SelectItem>
+                    <SelectItem value="jh">Jharkhand</SelectItem>
+                    <SelectItem value="ka">Karnataka</SelectItem>
+                    <SelectItem value="kl">Kerala</SelectItem>
+                    <SelectItem value="mp">Madhya Pradesh</SelectItem>
+                    <SelectItem value="mh">Maharashtra</SelectItem>
+                    <SelectItem value="mn">Manipur</SelectItem>
+                    <SelectItem value="ml">Meghalaya</SelectItem>
+                    <SelectItem value="mz">Mizoram</SelectItem>
+                    <SelectItem value="nl">Nagaland</SelectItem>
+                    <SelectItem value="or">Odisha</SelectItem>
+                    <SelectItem value="pb">Punjab</SelectItem>
+                    <SelectItem value="rj">Rajasthan</SelectItem>
+                    <SelectItem value="sk">Sikkim</SelectItem>
+                    <SelectItem value="tn">Tamil Nadu</SelectItem>
+                    <SelectItem value="tg">Telangana</SelectItem>
+                    <SelectItem value="tr">Tripura</SelectItem>
+                    <SelectItem value="up">Uttar Pradesh</SelectItem>
+                    <SelectItem value="ut">Uttarakhand</SelectItem>
+                    <SelectItem value="wb">West Bengal</SelectItem>
+                    <SelectItem value="an">
+                      Andaman and Nicobar Islands
+                    </SelectItem>
+                    <SelectItem value="ch">Chandigarh</SelectItem>
+                    <SelectItem value="dn">
+                      Daman and Diu
+                    </SelectItem>
+                    <SelectItem value="dl">Delhi</SelectItem>
+                    <SelectItem value="jk">Jammu and Kashmir</SelectItem>
+                    <SelectItem value="la">Ladakh</SelectItem>
+                    <SelectItem value="ld">Lakshadweep</SelectItem>
+                    <SelectItem value="py">Puducherry</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -348,10 +397,10 @@ export default function RegisterPage() {
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="ind">India</SelectItem>
                     <SelectItem value="us">United States</SelectItem>
                     <SelectItem value="ca">Canada</SelectItem>
                     <SelectItem value="uk">United Kingdom</SelectItem>
-                    {/* Add more countries as needed */}
                   </SelectContent>
                 </Select>
               </div>

@@ -19,10 +19,43 @@ import {
 const skillsOptions = [
   { value: "JavaScript", label: "JavaScript" },
   { value: "Python", label: "Python" },
+  { value: "Java", label: "Java" },
+  { value: "C#", label: "C#" },
+  { value: "Ruby", label: "Ruby" },
+  { value: "PHP", label: "PHP" },
+  { value: "HTML", label: "HTML" },
+  { value: "CSS", label: "CSS" },
+  { value: "SQL", label: "SQL" },
   { value: "React", label: "React" },
   { value: "Node.js", label: "Node.js" },
-  // Add more options as needed
+  { value: "Angular", label: "Angular" },
+  { value: "Vue.js", label: "Vue.js" },
+  { value: "Django", label: "Django" },
+  { value: "Flask", label: "Flask" },
+  { value: "Spring Boot", label: "Spring Boot" },
+  { value: "Swift", label: "Swift" },
+  { value: "Kotlin", label: "Kotlin" },
+  { value: "Go", label: "Go" },
+  { value: "Rust", label: "Rust" },
+  { value: "TypeScript", label: "TypeScript" },
+  { value: "C++", label: "C++" },
+  { value: "Sass", label: "Sass" },
+  { value: "GraphQL", label: "GraphQL" },
+  { value: "NoSQL", label: "NoSQL" },
+  { value: "Docker", label: "Docker" },
+  { value: "Kubernetes", label: "Kubernetes" },
+  { value: "Machine Learning", label: "Machine Learning" },
+  { value: "Artificial Intelligence", label: "Artificial Intelligence" },
+  { value: "Cybersecurity", label: "Cybersecurity" },
+  { value: "DevOps", label: "DevOps" },
+  { value: "API Development", label: "API Development" },
+  { value: "Web Development", label: "Web Development" },
+  { value: "Mobile App Development", label: "Mobile App Development" },
+  { value: "Cloud Computing", label: "Cloud Computing" },
+  { value: "Software Testing", label: "Software Testing" },
+  { value: "Agile Methodology", label: "Agile Methodology" }
 ];
+
 
 export default function AfterJobSeekerRegisterPage() {
   const location = useLocation();
