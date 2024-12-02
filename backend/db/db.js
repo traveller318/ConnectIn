@@ -1,10 +1,10 @@
 import mysql from 'mysql2'
 
 const con = mysql.createPool({
-    host: "ENTER THE HOST NAME",
-    user: "ENTER THE USER NAME",
-    password: "ENTER THE PASSWORD",
-    database: "ENTER THE DATABASE NAME"
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PWD,
+    database: process.env.DATABASE_NAME
 }).promise();
 
 
