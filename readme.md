@@ -95,5 +95,5 @@ ConnectIn simplifies the hiring process for employers while making job hunting m
 Feel free to contribute or use this project as a starting point for your job portal solutions!
 
 
-### Made with ❤️ by ConnectIn Team
+### Made with ❤️ by traveller318
 
